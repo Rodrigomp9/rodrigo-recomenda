@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Curadoria diária de tecnologia. Eu filtro a internet, você compra o que vale." />
+  <title>Rodrigo Recomenda • Tech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #09090B;
+      --surface:  #111113;
+      --card:     #18181B;
+      --border:   #27272A;
+      --t1:       #FAFAFA;
+      --t2:       #A1A1AA;
+      --t3:       #52525B;
+      --accent:   #3B82F6;
+      --accent-dim: rgba(59,130,246,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--t1);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9,9,11,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 1.5rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--t1);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section { padding: 7rem 0; }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 7rem 0 6rem;
+      text-align: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(59,130,246,0.25);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: #93C5FD;
+      margin-bottom: 2rem;
+    }
+    .pill-dot {
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    h1 {
+      font-size: clamp(2.75rem, 7vw, 4.75rem);
+      font-weight: 800;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: var(--t1);
+      max-width: 780px;
+      margin: 0 auto 1.5rem;
+    }
+
+    h1 mark {
+      background: none;
+      color: var(--accent);
+      position: relative;
+    }
+    h1 mark::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      bottom: 2px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+
+    .hero-sub {
+      font-size: 1.0625rem;
+      color: var(--t2);
+      line-height: 1.65;
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      padding: 13px 28px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: #2563EB; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .trust-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 1.5rem;
+    }
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 0.8125rem;
+      color: var(--t2);
+    }
+    .trust-pill svg { color: var(--accent); flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    .divider { border: none; border-top: 1px solid var(--border); }
+
+    /* ── SECTION LABEL ── */
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: 3.5rem;
+      text-align: center;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 3rem;
+    }
+    .step {
+      background: transparent;
+      padding: 0;
+      text-align: center;
+    }
+    .step-icon {
+      width: 48px; height: 48px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      color: var(--accent);
+    }
+    .step-num {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--t3);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--t1);
+    }
+    .step p {
+      font-size: 0.875rem;
+      color: var(--t2);
+      line-height: 1.6;
+    }
+
+    /* ── PRODUCTS ── */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s;
+    }
+    .product-card:hover { border-color: var(--t3); }
+
+    .product-cat {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--t3);
+      margin-bottom: 0.75rem;
+    }
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--t1);
+      margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+    .product-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 0.75rem;
+    }
+    .stars { color: #F59E0B; font-size: 0.75rem; letter-spacing: 1px; }
+    .reviews { font-size: 0.75rem; color: var(--t3); }
+    .badge {
+      display: inline-block;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.2);
+      color: #4ADE80;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+    .product-price {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .price-original {
+      font-size: 0.8125rem;
+      color: var(--t3);
+      text-decoration: line-through;
+      margin-bottom: 2px;
+    }
+    .price-current {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--t1);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .btn-outline {
+      display: block;
+      text-align: center;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--t2);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* ── STATS ── */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .stat {
+      background: var(--card);
+      padding: 2.5rem 1.5rem;
+    }
+    .stat-number {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--t1);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .stat-label {
+      font-size: 0.8125rem;
+      color: var(--t2);
+    }
+
+    /* ── FINAL CTA ── */
+    .cta-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .cta-box h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+    .cta-box p {
+      color: var(--t2);
+      margin-bottom: 2rem;
+      font-size: 0.9375rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .footer-disclaimer {
+      font-size: 0.8125rem;
+      color: var(--t3);
+      line-height: 1.7;
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+    .footer-copy {
+      font-size: 0.8125rem;
+      color: var(--t3);
+    }
+
+    /* ── FADE IN ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      section { padding: 5rem 0; }
+      .hero { padding: 5rem 0 4rem; }
+      .stats { grid-template-columns: 1fr; }
+      .stat { padding: 1.75rem 1.5rem; }
+      .steps { grid-template-columns: 1fr; }
+      .cta-box { padding: 2.5rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <a href="/" class="nav-logo">Rodrigo Recomenda <span>• Tech</span></a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+
+      <div class="pill">
+        <span class="pill-dot"></span>
+        Curadoria diária de tecnologia
+      </div>
+
+      <h1>Eu filtro a internet.<br>Você compra o que <mark>vale</mark>.</h1>
+
+      <p class="hero-sub">
+        Todo dia analiso centenas de ofertas de tecnologia e publico apenas as que eu compraria.
+        Sem falsas promoções. Sem spam. Sem enganação.
+      </p>
+
+      <a href="https://t.me/rodrigorecomenda" class="btn-primary" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        Entrar no canal gratuito
+      </a>
+
+      <div class="trust-pills">
+        <span class="trust-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Histórico de preço verificado
+        </span>
+        <span class="trust-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Sem spam — poucas ofertas, bem escolhidas
+        </span>
+        <span class="trust-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          100% gratuito
+        </span>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- COMO FUNCIONA -->
+  <section class="fade-in">
+    <div class="container">
+      <p class="section-label">Como funciona</p>
+      <div class="steps">
+
+        <div class="step">
+          <div class="step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+          <p class="step-num">01</p>
+          <h3>Eu analiso</h3>
+          <p>Verifico histórico de preço, avaliações e reputação do vendedor antes de qualquer publicação. Se tiver dúvida, não publico.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+          </div>
+          <p class="step-num">02</p>
+          <h3>Eu filtro</h3>
+          <p>De centenas de ofertas do dia, publico apenas aquelas que realmente valem a compra. A maioria vai pro lixo.</p>
+        </div>
+
+        <div class="step">
+          <div class="step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+          </div>
+          <p class="step-num">03</p>
+          <h3>Você decide</h3>
+          <p>Receba a recomendação, clique se gostar. Sem pressão, sem flood, sem falsas urgências de "acabando!".</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- PRODUTOS -->
+  <section class="fade-in">
+    <div class="container">
+      <p class="section-label">Últimas recomendações</p>
+      <div class="products">
+
+        <div class="product-card">
+          <p class="product-cat">Armazenamento</p>
+          <p class="product-name">SSD Kingston 1TB NVMe M.2</p>
+          <div class="product-meta">
+            <span class="stars">★★★★★</span>
+            <span class="reviews">8.400 avaliações</span>
+          </div>
+          <span class="badge">↓ Menor preço em 90 dias</span>
+          <div class="product-price">
+            <p class="price-original">R$ 399</p>
+            <p class="price-current">R$ 249</p>
+            <a href="https://t.me/rodrigorecomenda" class="btn-outline" target="_blank" rel="noopener">Ver oferta →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <p class="product-cat">Áudio</p>
+          <p class="product-name">Fone Sony WH-1000XM5</p>
+          <div class="product-meta">
+            <span class="stars">★★★★★</span>
+            <span class="reviews">12.700 avaliações</span>
+          </div>
+          <span class="badge">↓ Menor preço em 90 dias</span>
+          <div class="product-price">
+            <p class="price-original">R$ 1.899</p>
+            <p class="price-current">R$ 1.299</p>
+            <a href="https://t.me/rodrigorecomenda" class="btn-outline" target="_blank" rel="noopener">Ver oferta →</a>
+          </div>
+        </div>
+
+        <div class="product-card">
+          <p class="product-cat">Notebooks</p>
+          <p class="product-name">Notebook Dell Inspiron 15</p>
+          <div class="product-meta">
+            <span class="stars">★★★★★</span>
+            <span class="reviews">5.200 avaliações</span>
+          </div>
+          <span class="badge">↓ Menor preço em 90 dias</span>
+          <div class="product-price">
+            <p class="price-original">R$ 3.299</p>
+            <p class="price-current">R$ 2.499</p>
+            <a href="https://t.me/rodrigorecomenda" class="btn-outline" target="_blank" rel="noopener">Ver oferta →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- STATS -->
+  <section class="fade-in">
+    <div class="container">
+      <div class="stats">
+        <div class="stat">
+          <p class="stat-number">3.200+</p>
+          <p class="stat-label">Membros no canal</p>
+        </div>
+        <div class="stat">
+          <p class="stat-number">180+</p>
+          <p class="stat-label">Ofertas publicadas</p>
+        </div>
+        <div class="stat">
+          <p class="stat-number">4.8/5</p>
+          <p class="stat-label">Avaliação média dos produtos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- FINAL CTA -->
+  <section class="fade-in">
+    <div class="container">
+      <div class="cta-box">
+        <h2>Pronto para comprar com inteligência?</h2>
+        <p>Entre gratuitamente. Saia quando quiser. Sem compromisso.</p>
+        <a href="https://t.me/rodrigorecomenda" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          Entrar no Telegram agora
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-disclaimer">
+      <strong style="color: var(--t2);">Transparência:</strong> alguns links desta página são de afiliados.
+      Ao comprar por eles, recebo uma pequena comissão — sem nenhum custo adicional para você.
+      Isso é o que mantém a curadoria gratuita e independente.
+      Os preços exibidos são referência do momento da publicação e podem mudar a qualquer instante
+      — confirme sempre o valor atualizado na loja.
+    </p>
+    <p class="footer-copy">© 2026 Rodrigo Recomenda • Tech</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
